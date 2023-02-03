@@ -25,4 +25,6 @@ namespace VrmDailyPhysicalTest.Models
         [Column("isActive")]
         public bool? IsActive { get; set; }
     }
+
+    
 }
