@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VrmDailyPhysicalTest.Interface;
+using static VrmDailyPhysicalTest.DTO.VrmDailyPhysicalTestDTO;
 
 namespace VrmDailyPhysicalTest.Controllers
 {
@@ -27,6 +28,14 @@ namespace VrmDailyPhysicalTest.Controllers
             {
                 throw ex;
             }
+        }
+
+        [HttpPost]
+        [Route("CreateAndEditCargoUnloadingStatement")]
+        public async Task<IActionResult> CreateAndEditVrmDailyPhysicalTest(VrmDailyPhysicalTestCommonDTO obj)
+        {
+            var msg = await _iVrmDailyPhysicalTest.CreateAndEditVrmDailyPhysicalTest(obj);
+            return Ok(msg);
         }
     }
 }

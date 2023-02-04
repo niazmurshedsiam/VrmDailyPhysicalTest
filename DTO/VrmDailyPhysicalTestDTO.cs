@@ -6,7 +6,12 @@ namespace VrmDailyPhysicalTest.DTO
 {
     public class VrmDailyPhysicalTestDTO
     {
-        public class VrmDailyPhysicalTestHeader
+        public class VrmDailyPhysicalTestCommonDTO
+        {
+            public VrmDailyPhysicalTestHeaderDTO? objHeader { get; set; }
+            public List<VrmDailyPhysicalTestRowDTO>? objRow { get; set; }
+        }
+        public class VrmDailyPhysicalTestHeaderDTO
         {
             public long IntDailyPhysicalTestId { get; set; }
           
@@ -25,7 +30,7 @@ namespace VrmDailyPhysicalTest.DTO
             
             public string? StrItemTypeName { get; set; }
            
-            public TimeSpan? TmTime { get; set; }
+            //public TimeSpan? TmTime { get; set; }
            
             public DateTime? DteDate { get; set; }
            
@@ -36,9 +41,29 @@ namespace VrmDailyPhysicalTest.DTO
             public string? StrRemark { get; set; }
          
             public bool? IsActive { get; set; }
-
-            public List<VrmDailyPhysicalTestRow>? row { get; set; }
+            public long? IntCreatedBy { get; set; }
             
+            public DateTime? DteCreatedAt { get; set; }
+            
+            public long? IntUpdatedBy { get; set; }
+           
+            public DateTime? DteUpdateAt { get; set; }
+
+            //public List<VrmDailyPhysicalTestRowDTO>? row { get; set; }
+            
+
+        }
+
+        public class VrmDailyPhysicalTestRowDTO
+        {
+            public long IntRowId { get; set; }
+            public long? IntTestElementId { get; set; }
+
+            public long? IntDailyPhysicalTestId { get; set; }
+
+            public decimal? NumTestElementValue { get; set; }
+
+            public bool? IsActive { get; set; }
 
         }
 
@@ -51,16 +76,6 @@ namespace VrmDailyPhysicalTest.DTO
             public string? StrUoMname { get; set; }
         }
 
-        public class VrmDailyPhysicalTestRow
-        {
-            public long? IntTestElementId { get; set; }
-            
-            public long? IntDailyPhysicalTestId { get; set; }
-            
-            public decimal? NumTestElementValue { get; set; }
-           
-            public bool? IsActive { get; set; }
-           
-        }
+        
     }
 }
