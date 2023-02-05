@@ -7,5 +7,6 @@ namespace VrmDailyPhysicalTest.Interface
     {
         public Task<List<VrmDailyPhysicalTestElementconfigDTO>> GetVrmDailyPhysicalTestElementconfigDDL(long BusinessUnitId);
         public Task<MessageHelper> CreateAndEditVrmDailyPhysicalTest(VrmDailyPhysicalTestCommonDTO obj);
+        public Task<MessageHelper> CreateVrmDailyPhysicalTest(VrmDailyPhysicalTestCommonDTO obj);
     }
 }

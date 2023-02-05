@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using VrmDailyPhysicalTest.DbContexts;
 using VrmDailyPhysicalTest.DTO;
 using VrmDailyPhysicalTest.Helper;
@@ -20,6 +21,22 @@ namespace VrmDailyPhysicalTest.Repository
         {
             try
             {
+                //MessageHelper a = new MessageHelper(); int aa;
+                //a.statuscode = 1;
+                //aa = 1;
+
+                //MessageHelper x = a;
+                //int xx = aa;
+
+                //a.statuscode = 5;
+                //aa = 5;
+
+
+                //// a.statuscode = 5, aa = 5 
+                //// x.statuscode = 5, xx = 1
+
+
+                
                 MessageHelper msg = new MessageHelper();
                 long HeaderId = 0;
                 if (obj.objHeader.IntDailyPhysicalTestId > 0) //edit
@@ -34,13 +51,13 @@ namespace VrmDailyPhysicalTest.Repository
                     updateHeader.IntItemTypeId= obj.objHeader.IntItemTypeId;
                     updateHeader.StrItemTypeName = obj.objHeader.StrItemTypeName;
                     updateHeader.IntBusinessUnitId = obj.objHeader.IntBusinessUnitId;
-                    //updateHeader.TmTime = obj.objHeader.TmTime;
+                    //updateHeader.TmTime = obj.objHeader.TmTime; // "23:30:50"
                     updateHeader.DteDate = obj.objHeader.DteDate;
                     updateHeader.NumInitialTime = obj.objHeader.NumInitialTime;
                     updateHeader.NumFinalTime = obj.objHeader.NumFinalTime;
                     updateHeader.StrRemark = obj.objHeader.StrRemark;
 
-                    msg.Message = "Updated Successfully";
+                    msg.Message = "Updated Successfully - res";
                     msg.statuscode = 200;
                 }
                 else //create
@@ -116,7 +133,7 @@ namespace VrmDailyPhysicalTest.Repository
                     inactiveitems.ForEach(itms => { itms.IsActive = false; });
 
                     _context.TblVrmDailyPhysicalTestRows.UpdateRange(inactiveitems);
-                    await _context.SaveChangesAsync();
+                   // await _context.SaveChangesAsync();
                 }
 
                 if (newList.Count > 0)
@@ -128,10 +145,73 @@ namespace VrmDailyPhysicalTest.Repository
                 if (editList.Count > 0)
                 {
                     _context.TblVrmDailyPhysicalTestRows.UpdateRange(editList);
-                    await _context.SaveChangesAsync();
+                   // await _context.SaveChangesAsync();
+                }
+                
+                return msg;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<MessageHelper> CreateVrmDailyPhysicalTest(VrmDailyPhysicalTestCommonDTO obj)
+        {
+            try
+            {
+                TblVrmDailyPhysicalTestHeader data = new TblVrmDailyPhysicalTestHeader
+                {
+                    
+                    IntBusinessUnitId = obj.objHeader.IntBusinessUnitId,
+                    IntShiftId = obj.objHeader.IntShiftId,
+                    StrShiftName = obj.objHeader.StrShiftName,
+                    IntItemTypeId= obj.objHeader.IntItemTypeId,
+                    StrItemTypeName= obj.objHeader.StrItemTypeName,
+                    IntVrmid = obj.objHeader.IntVrmid,
+                    StrVrmname = obj.objHeader.StrVrmname,
+                    TmTime = obj.objHeader.TmTime,
+                    DteDate = obj.objHeader.DteDate,
+                    NumInitialTime = obj.objHeader.NumInitialTime,
+                    NumFinalTime = obj.objHeader.NumFinalTime,
+                    StrRemark = obj.objHeader.StrRemark,
+                    IsActive = true,
+                    IntCreatedBy = obj.objHeader.IntCreatedBy,
+                    DteCreatedAt = DateTime.Now,
+                    IntUpdatedBy = obj.objHeader.IntUpdatedBy,
+                    DteUpdateAt = DateTime.Now
+                };
+                var rowlist = new List<TblVrmDailyPhysicalTestRow>(obj.objRow.Count);
+                foreach (var item in obj.objRow)
+                {
+                   
+                    var row = new TblVrmDailyPhysicalTestRow
+                    {
+                        IntDailyPhysicalTestId = data.IntDailyPhysicalTestId,
+                        IntTestElementId = item.IntTestElementId,
+                        NumTestElementValue= item.NumTestElementValue,
+                        IsActive = true,
+                        IntCreatedBy = item.IntCreatedBy,
+                        DteCreatedAt = DateTime.Now,
+                        
+                    };
+
+                    rowlist.Add(row);
                 }
 
+                await _context.TblVrmDailyPhysicalTestHeaders.AddAsync(data);
+                await _context.SaveChangesAsync();
+
+                await _context.TblVrmDailyPhysicalTestRows.AddRangeAsync(rowlist);
+                await _context.SaveChangesAsync();
+
+                var msg = new MessageHelper();
+                msg.Message = "Create Successfully";
+                msg.statuscode = 200;
                 return msg;
+
 
             }
             catch (Exception)

@@ -30,7 +30,7 @@ namespace VrmDailyPhysicalTest.DTO
             
             public string? StrItemTypeName { get; set; }
            
-            //public TimeSpan? TmTime { get; set; }
+            public TimeSpan? TmTime { get; set; }
            
             public DateTime? DteDate { get; set; }
            
@@ -64,6 +64,9 @@ namespace VrmDailyPhysicalTest.DTO
             public decimal? NumTestElementValue { get; set; }
 
             public bool? IsActive { get; set; }
+            public long? IntCreatedBy { get; set; }
+
+            public DateTime? DteCreatedAt { get; set; }
 
         }
 
@@ -74,6 +77,9 @@ namespace VrmDailyPhysicalTest.DTO
             public long? IntBusinessUnitId { get; set; }
             public long? IntUoMid { get; set; }
             public string? StrUoMname { get; set; }
+            
+
+
         }
 
         

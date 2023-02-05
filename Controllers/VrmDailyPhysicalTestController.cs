@@ -37,5 +37,13 @@ namespace VrmDailyPhysicalTest.Controllers
             var msg = await _iVrmDailyPhysicalTest.CreateAndEditVrmDailyPhysicalTest(obj);
             return Ok(msg);
         }
+
+        [HttpPost]
+        [Route("CreateVrmDailyPhysicalTest")]
+        public async Task<IActionResult> CreateVrmDailyPhysicalTest(VrmDailyPhysicalTestCommonDTO obj)
+        {
+            var msg = await _iVrmDailyPhysicalTest.CreateVrmDailyPhysicalTest(obj);
+            return Ok(msg);
+        }
     }
 }
